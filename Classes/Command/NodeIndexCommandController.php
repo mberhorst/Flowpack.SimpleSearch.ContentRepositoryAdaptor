@@ -121,7 +121,7 @@ class NodeIndexCommandController extends CommandController
     protected function traverseNodes(NodeInterface $currentNode): void
     {
         try {
-            $this->nodeIndexer->indexNode($currentNode, null, false);
+            $this->nodeIndexer->indexNode($currentNode, null);
         } catch (NodeException|IndexingException|EelException $exception) {
             throw new Exception(sprintf('Error during indexing of node %s (%s)', $currentNode->getPath(), $currentNode->getIdentifier()), 1579170291, $exception);
         }
