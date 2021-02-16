@@ -112,19 +112,13 @@ class NodeIndexer extends AbstractNodeIndexer
      *
      * @param NodeInterface $node
      * @param string $targetWorkspaceName
-     * @param boolean $indexVariants
      * @return void
      * @throws NodeException
      * @throws IndexingException
      * @throws Exception
      */
-    public function indexNode(NodeInterface $node, $targetWorkspaceName = null, $indexVariants = true)
+    public function indexNode(NodeInterface $node, $targetWorkspaceName = null): void
     {
-        if ($indexVariants === true) {
-            $this->indexAllNodeVariants($node);
-            return;
-        }
-
         $identifier = $this->generateUniqueNodeIdentifier($node);
 
         if ($node->isRemoved()) {
@@ -161,7 +155,7 @@ class NodeIndexer extends AbstractNodeIndexer
      * @param NodeInterface $node
      * @return void
      */
-    public function removeNode(NodeInterface $node)
+    public function removeNode(NodeInterface $node): void
     {
         $identifier = $this->generateUniqueNodeIdentifier($node);
         $this->indexClient->removeData($identifier);
@@ -170,7 +164,7 @@ class NodeIndexer extends AbstractNodeIndexer
     /**
      * @return void
      */
-    public function flush()
+    public function flush(): void
     {
         $this->indexedNodeData = [];
     }
@@ -212,14 +206,14 @@ class NodeIndexer extends AbstractNodeIndexer
                     $context = $indexer->contextFactory->create(['workspaceName' => $workspaceName, 'dimensions' => $combination]);
                     $node = $context->getNodeByIdentifier($nodeIdentifier);
                     if ($node !== null) {
-                        $indexer->indexNode($node, null, false);
+                        $indexer->indexNode($node, null);
                     }
                 }
             } else {
                 $context = $indexer->contextFactory->create(['workspaceName' => $workspaceName]);
                 $node = $context->getNodeByIdentifier($nodeIdentifier);
                 if ($node !== null) {
-                    $indexer->indexNode($node, null, false);
+                    $indexer->indexNode($node, null);
                 }
             }
         });
